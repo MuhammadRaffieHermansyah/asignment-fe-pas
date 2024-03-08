@@ -1,33 +1,32 @@
 import axios from "axios";
 import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import { useState, useEffect } from "react";
-import { Link, redirect } from "react-router-dom";
+import { useState } from "react";
+import { redirect } from "react-router-dom";
 import ModalDetail from "./ModalDetail";
 import ModalUpdate from "./ModalUpdate";
 
-export const Movies = ({ movies, setMovies }) => {
+export const Movies = ({ movies, setMovies, onRefresh }) => {
   const [show, setShow] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [movie, setMovie] = useState({
+    created_at: "",
+    duration: 0,
+    id: 0,
+    image: "",
     name: "",
     synopsis: "",
-    duration: "",
-    year: "",
+    updated_at: "",
+    year: 0,
   });
 
   const modalShow = (data) => {
     setMovie(data);
     setShow(true);
-    console.log(movie);
   };
 
   const modalEditShow = (data) => {
-    // console.log(data)
-
     setMovie(data);
     setShowEdit(true);
-    console.log(movie);
   };
 
   const modalClose = () => setShow(false);
@@ -71,7 +70,12 @@ export const Movies = ({ movies, setMovies }) => {
         );
       })}
       <ModalDetail show={show} movie={movie} onHide={modalClose} />
-      <ModalUpdate show={showEdit} movie={movie} onHide={modalEditClose} />
+      <ModalUpdate
+        show={showEdit}
+        movie={movie}
+        onHide={modalEditClose}
+        onRefresh={onRefresh}
+      />
     </>
   );
 };

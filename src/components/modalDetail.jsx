@@ -2,8 +2,6 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 const ModalDetail = ({ show, onHide, movie }) => {
-//   console.log(movie);
-
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>

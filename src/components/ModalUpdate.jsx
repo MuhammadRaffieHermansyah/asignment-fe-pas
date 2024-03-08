@@ -1,18 +1,21 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
 
-const ModalUpdate = ({ show, onHide, movie }) => {
+const ModalUpdate = ({ show, onHide, movie, onRefresh }) => {
+  const [data, setData] = useState(movie);
 
-    
-  const [data, setData] = useState({
-    name: movie.name,
-    duration: movie.duration,
-    synopsis: movie.synopsis,
-    year: movie.year,
-  });
+  useEffect(() => {
+    setData({
+      ...movie,
+      name: movie.name,
+      duration: movie.duration,
+      synopsis: movie.synopsis,
+      year: movie.year,
+    });
+  }, [movie]);
 
   //   state buat file yang dipilih
   const [file, setFile] = useState(null);
@@ -38,34 +41,38 @@ const ModalUpdate = ({ show, onHide, movie }) => {
     formData.append("duration", data.duration);
     formData.append("synopsis", data.synopsis);
     formData.append("year", data.year);
+
+    // const datas = formData.entries();
+
+    // datas.forEach((data) => {
+    //   console.log(data);
+    // });
+
+    // return;
     if (file) {
       formData.append("image", file);
     }
 
     axios
-      .put("http://127.0.0.1:8000/api/movie/" + movie?.id, formData) // formdata jadi data yang dikirim
+      .post(
+        `http://127.0.0.1:8000/api/movie/${movie?.id}?_method=PUT`,
+        formData
+      ) // formdata jadi data yang dikirim
       .then(() => {
-        return navigate("/alldata");
+        onRefresh();
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  //   console.log(movie)
-  //   console.log(data)
-
   return (
-    <Modal show={show} onHide={onHide}>
-      <Modal.Header closeButton>
-        <Modal.Title>Modal Edit</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <form
-          className="row g-3 p-5 mx-5"
-          encType="multipart/form-data"
-          onSubmit={handleSubmit}
-        >
+    <Modal show={show} onHide={onHide} size="lg">
+      <form encType="multipart/form-data" onSubmit={handleSubmit}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal Edit</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="row">
           <div className="col-md-6">
             <label htmlFor="Name" className="form-label">
               Name
@@ -131,21 +138,16 @@ const ModalUpdate = ({ show, onHide, movie }) => {
               //   value={file}
             />
           </div>
-          <div className="col-12 mt-5">
-            <button type="submit" className="btn btn-primary col-12">
-              Update
-            </button>
-          </div>
-        </form>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={onHide}>
-          Close
-        </Button>
-        <Button variant="primary" onClick={onHide}>
-          Save Changes
-        </Button>
-      </Modal.Footer>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={onHide}>
+            Close
+          </Button>
+          <Button variant="primary" type="submit" onClick={onHide}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </form>
     </Modal>
   );
 };
