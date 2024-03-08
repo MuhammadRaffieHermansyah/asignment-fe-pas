@@ -6,14 +6,13 @@ import AddData from './pages/AddData'
 import AllData from './pages/AllData'
 import UpdateData from './pages/UpdateData'
 import Navbar from './components/navbar'
-import { TableData } from './components/TableData'
 import { Movies } from './components/Movie'
 import { useState , useEffect } from 'react'
 import axios from 'axios'
 
 export default function App() {
 
-  const [movie , setMovie] = useState([]);
+  const [movies , setMovies] = useState([]);
     
   const getData = async () =>  {
       const response = await axios.get('http://127.0.0.1:8000/api/movie');
@@ -23,29 +22,28 @@ export default function App() {
   
   useEffect(() => {
       getData().then(data => {
-          setMovie(data)
+          setMovies(data)
       })
   } , [])
 
   // console.log(movie)
 
-  const handleEdit = (i) => {
-      axios.put('http://127.0.0.1:8000/api/movie/' + {i} , {i})
-          .then(res => {
-              console.log(res)
-          })
-          .catch(err => {
-              console.log(err)
-          })
-  }
+  // const handleEdit = () => {
+  //     axios.put('http://127.0.0.1:8000/api/movie/' + {i} , {i})
+  //         .then(res => {
+  //             console.log(res)
+  //         })
+  //         .catch(err => {
+  //             console.log(err)
+  //         })
+  // }
 
-  const handleDelete = () => {
-      axios.delete('http://127.0.0.1:8000/api/movie/{i}')
-          .then(data => {
-              setMovie(data)
-          })
-  }
-
+  // const handleDelete = () => {
+  //     axios.delete('http://127.0.0.1:8000/api/movie/{i}')
+  //         .then(data => {
+  //             setMovies(data)
+  //         })
+  // }
 
   return (
       <Router>
@@ -67,7 +65,7 @@ export default function App() {
 
           <Route path="/adddata" 
             element={ <Navbar>
-              <AddData setMovie={setMovie}/>
+              <AddData/>
             </Navbar> } />
 
           <Route path="/updatedata" 
@@ -78,9 +76,7 @@ export default function App() {
           <Route path="/alldata" 
             element={ <Navbar>
               <AllData>
-                {/* <TableData> */}
-                  <Movies  movie={movie} setMovie={setMovie}/>
-                {/* </TableData> */}
+                  <Movies  movies={movies} setMovie={setMovies}/>
               </AllData>
             </Navbar> } />
         </Routes>
