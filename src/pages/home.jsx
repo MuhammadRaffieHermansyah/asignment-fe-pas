@@ -1,14 +1,22 @@
-import {useNavigate} from 'react-router-dom'
-
-const Home = () => {
-    const navigate = useNavigate()
-    return(
-        <>
-            {/* <Navbar/> */}
-            <h1>INI HALAMAN HOME</h1>
-            <button onClick={() => navigate('/login')} >Login</button>
-            <button onClick={() => navigate('/registrasi')} >Registrasi</button>
-        </>
-    )
-}
-export default Home
+const Home = ({ children, movies }) => {
+  const containerStyle = {
+    marginTop : "30cm",
+    width: "100%",
+    background : "transparent",
+    border : "none"
+  };
+  const rowStyle = {
+    // display : "flex",
+    // alignItems : "center",
+    // justifyContent : "center",
+    // marign : "10px auto"
+  }
+  return (
+    <>
+    <div className="container" style={containerStyle}>
+      <div className="row" style={rowStyle}>{children}</div>
+    </div>
+    </>
+  );
+};
+export default Home;

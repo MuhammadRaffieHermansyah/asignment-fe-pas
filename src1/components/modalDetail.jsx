@@ -3,18 +3,19 @@ import Modal from "react-bootstrap/Modal";
 
 const ModalDetail = ({ show, onHide, movie }) => {
   return (
-    <Modal show={show} onHide={onHide} size="lg">
+    <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
         <Modal.Title>Modal heading</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h3>{movie?.name}</h3>
-        <p>{movie?.synopsis}</p>
-        <p>Duration : {movie?.duration} , Published in : {movie?.year}th</p>
+        <h1>{movie?.name}</h1>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onHide}>
           Close
+        </Button>
+        <Button variant="primary" onClick={onHide}>
+          Save Changes
         </Button>
       </Modal.Footer>
     </Modal>

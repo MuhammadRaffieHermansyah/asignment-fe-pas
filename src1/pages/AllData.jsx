@@ -1,10 +1,7 @@
 const AllData = ({children}) => {
-    const TableStyle = {
-        margin : "100px auto",
-        width : "1200px",
-    }
     return (
-        <table className="table table-striped table-hover" style={TableStyle}>
+        <>
+        <table className="table table-striped table-hover m-5">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -17,6 +14,7 @@ const AllData = ({children}) => {
                 {children} 
             </tbody>
         </table>
+        </>
     )
 }
 export default AllData

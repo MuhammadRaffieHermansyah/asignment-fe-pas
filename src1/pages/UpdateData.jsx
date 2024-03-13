@@ -1,70 +1,37 @@
-import axios from "axios";
 import { useState } from "react";
-import {useNavigate} from 'react-router-dom'
+import axios from "axios";
 
-export const FormStore = ({onRefresh}) => {
-    
+const UpdateData = () => {
   const [data, setData] = useState({
-    name: null,
-    duration: null,
-    synopsis: null,
-    year: null,
+    name: "",
+    duration: "",
+    synopsis: "",
+    year: "",
+    image: "",
   });
 
-  //   state buat file yang dipilih
-  const [file, setFile] = useState(null);
-  const navigate = useNavigate();
+  const { state } = this.props.location;
 
-  //   handler buat on change inpput file
-  const handleChangeFile = (event) => {
-    setFile(event.target.files[0]);
+  const handleInput = (input) => {
+    setData({ ...data, [input.target.name]: input.target.value });
   };
 
-  const handleInput = (event) => {
-    setData({ ...data, [event.target.name]: event.target.value });
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    // check kalau gaada file stop
-    if(!file) {
-      console.log("Please select image");
-      return;
-    }
-
-    // FormData buat ngirim data filenya
-    // gabisa kalau pakai objek {} biasa
-    // objek biasa buat data string atau number doang
-    const formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("duration", data.duration);
-    formData.append("synopsis", data.synopsis);
-    formData.append("year", data.year);
-    formData.append("image", file);
-
+  const handleSubmit = (btn) => {
+    btn.preventDefault();
     axios
-      .post("http://127.0.0.1:8000/api/movie", formData) // formdata jadi data yang dikirim
-      .then(() => {
-        onRefresh()
-        return navigate('/alldata')
+      .put("http://127.0.0.1:8000/api/movie/" + "", { data })
+      .then((res) => {
+        console.log(res);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
-  const FormStyle = {
-    color : "white"
-  }
+  console.log(state);
   return (
     <>
-      <form
-        className="row g-3 p-5 mx-5"
-        encType="multipart/form-data"
-        onSubmit={(handleSubmit)}
-        style={FormStyle}
-      >
+      {/* <Navbar/> */}
+      <form className="row g-3 p-5 mx-5" onSubmit={handleSubmit}>
         <div className="col-md-6">
           <label htmlFor="Name" className="form-label">
             Name
@@ -120,17 +87,18 @@ export const FormStore = ({onRefresh}) => {
           <input
             type="file"
             name="image"
-            onChange={handleChangeFile} // handler change file dipasang disini
+            onChange={handleInput}
             className="form-control"
             id="inputPassword4"
           />
         </div>
         <div className="col-12 mt-5">
-          <button type="submit" className="btn btn-danger col-12">
-            Add Data
+          <button type="submit" className="btn btn-primary col-12">
+            Update Data
           </button>
         </div>
       </form>
     </>
   );
 };
+export default UpdateData;

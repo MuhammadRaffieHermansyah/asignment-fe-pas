@@ -1,10 +1,10 @@
 import { FormStore } from "../components/FormStore"
 
-const AddData = ({onRefresh}) => {
+const AddData = () => {
     
     return (
         <>
-            <FormStore onRefresh={onRefresh}/>
+            <FormStore />
         </>
     )
 }

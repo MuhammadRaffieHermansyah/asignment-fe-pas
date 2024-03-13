@@ -1,11 +1,11 @@
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
+import { redirect } from "react-router-dom";
 import ModalDetail from "./ModalDetail";
 import ModalUpdate from "./ModalUpdate";
 
 export const Movies = ({ movies, setMovies, onRefresh }) => {
-  
   const [show, setShow] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [movie, setMovie] = useState({
@@ -18,14 +18,6 @@ export const Movies = ({ movies, setMovies, onRefresh }) => {
     updated_at: "",
     year: 0,
   });
-
-  const handleDelete = async (data) => {
-      axios
-        .delete(`http://127.0.0.1:8000/api/movie/${data.id}`)
-        .then(() => {
-          onRefresh();
-        });
-  }
 
   const modalShow = (data) => {
     setMovie(data);
@@ -62,7 +54,14 @@ export const Movies = ({ movies, setMovies, onRefresh }) => {
 
               <Button
                 variant="danger"
-                onClick={() => handleDelete(movieItem)}
+                onClick={async () => {
+                  const id = movieItem.id;
+                  axios
+                    .delete("http://127.0.0.1:8000/api/movie/" + id)
+                    .then(() => {
+                      return redirect("/alldata");
+                    });
+                }}
               >
                 Delete
               </Button>

@@ -9,8 +9,6 @@ import Navbar from "./components/navbar";
 import { Movies } from "./components/Movie";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import MovieHome from "./components/MovieHome";
-import './App.css'
 
 export default function App() {
   const [movies, setMovies] = useState([]);
@@ -32,6 +30,25 @@ export default function App() {
     });
   }, []);
 
+  // console.log(movie)
+
+  // const handleEdit = () => {
+  //     axios.put('http://127.0.0.1:8000/api/movie/' + {i} , {i})
+  //         .then(res => {
+  //             console.log(res)
+  //         })
+  //         .catch(err => {
+  //             console.log(err)
+  //         })
+  // }
+
+  // const handleDelete = () => {
+  //     axios.delete('http://127.0.0.1:8000/api/movie/{i}')
+  //         .then(data => {
+  //             setMovies(data)
+  //         })
+  // }
+
   return (
     <Router>
       <Routes>
@@ -39,22 +56,34 @@ export default function App() {
           path="/"
           element={
             <Navbar>
-              <Home movies={movies}>
-                <MovieHome movies={movies} />
-              </Home>
+              <Home />
             </Navbar>
           }
         />
 
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/login"
+          element={
+            <Navbar>
+              <Login />
+            </Navbar>
+          }
+        />
 
-        <Route path="/register" element={<Registrasi />} />
+        <Route
+          path="/registrasi"
+          element={
+            <Navbar>
+              <Registrasi />
+            </Navbar>
+          }
+        />
 
         <Route
           path="/adddata"
           element={
             <Navbar>
-              <AddData onRefresh={handleRefreshList} />
+              <AddData />
             </Navbar>
           }
         />

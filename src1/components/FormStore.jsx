@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import {useNavigate} from 'react-router-dom'
 
-export const FormStore = ({onRefresh}) => {
+export const FormStore = () => {
     
   const [data, setData] = useState({
     name: null,
@@ -46,24 +46,18 @@ export const FormStore = ({onRefresh}) => {
     axios
       .post("http://127.0.0.1:8000/api/movie", formData) // formdata jadi data yang dikirim
       .then(() => {
-        onRefresh()
         return navigate('/alldata')
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
-  const FormStyle = {
-    color : "white"
-  }
   return (
     <>
       <form
         className="row g-3 p-5 mx-5"
         encType="multipart/form-data"
         onSubmit={(handleSubmit)}
-        style={FormStyle}
       >
         <div className="col-md-6">
           <label htmlFor="Name" className="form-label">
@@ -126,7 +120,7 @@ export const FormStore = ({onRefresh}) => {
           />
         </div>
         <div className="col-12 mt-5">
-          <button type="submit" className="btn btn-danger col-12">
+          <button type="submit" className="btn btn-primary col-12">
             Add Data
           </button>
         </div>
