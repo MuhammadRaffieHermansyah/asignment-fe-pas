@@ -50,14 +50,14 @@ export default function App() {
 
         <Route path="/register" element={<Registrasi />} />
 
-        <Route
+        {/* <Route
           path="/adddata"
           element={
             <Navbar>
               <AddData onRefresh={handleRefreshList} />
             </Navbar>
           }
-        />
+        /> */}
 
         <Route
           path="/updatedata"
@@ -72,7 +72,7 @@ export default function App() {
           path="/alldata"
           element={
             <Navbar>
-              <AllData>
+              <AllData onRefresh={handleRefreshList}>
                 <Movies
                   movies={movies}
                   setMovie={setMovies}
