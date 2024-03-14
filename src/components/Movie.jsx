@@ -40,6 +40,17 @@ export const Movies = ({ movies, setMovies, onRefresh }) => {
   const modalClose = () => setShow(false);
   const modalEditClose = () => setShowEdit(false);
 
+  
+  const secondsToTime = (seconds) => {
+    const hrs = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = Math.floor(seconds % 60);
+  
+    return `${hrs.toString().padStart(2, '0')}:${mins
+      .toString()
+      .padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
   return (
     <>
       {movies.map((movieItem, i) => {
@@ -47,7 +58,8 @@ export const Movies = ({ movies, setMovies, onRefresh }) => {
           <tr key={movieItem.id}>
             <td>{(i += 1)}</td>
             <td>{movieItem.name}</td>
-            <td>{movieItem.duration}</td>
+            <td>{secondsToTime(movieItem.duration)}</td>
+            <td>{movieItem.year}</td>
             <td>
               <Button variant="primary" onClick={() => modalShow(movieItem)}>
                 Detail
@@ -59,7 +71,6 @@ export const Movies = ({ movies, setMovies, onRefresh }) => {
               >
                 Edit
               </Button>
-
               <Button
                 variant="danger"
                 onClick={() => handleDelete(movieItem)}

@@ -30,6 +30,9 @@ const ModalUpdate = ({ show, onHide, movie, onRefresh }) => {
     setData({ ...data, [event.target.name]: event.target.value });
   };
 
+  const [validation, setValidation] = useState([]);
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -62,7 +65,7 @@ const ModalUpdate = ({ show, onHide, movie, onRefresh }) => {
         onRefresh();
       })
       .catch((err) => {
-        console.log(err);
+        setValidation(err.response.data);
       });
   };
 
@@ -85,6 +88,9 @@ const ModalUpdate = ({ show, onHide, movie, onRefresh }) => {
               id="Name"
               value={data.name}
             />
+            {validation.name && (
+              <small className="text-danger">{validation.name[0]}</small>
+            )}
           </div>
           <div className="col-md-6">
             <label htmlFor="Duration" className="form-label">
@@ -98,6 +104,9 @@ const ModalUpdate = ({ show, onHide, movie, onRefresh }) => {
               id="Duration"
               value={data.duration}
             />
+            {validation.duration && (
+              <small className="text-danger">{validation.duration[0]}</small>
+            )}
           </div>
           <div className="col-12">
             <label htmlFor="Synopsis" className="form-label">
@@ -111,6 +120,9 @@ const ModalUpdate = ({ show, onHide, movie, onRefresh }) => {
               id="Synopsis"
               value={data.synopsis}
             />
+            {validation.synopsis && (
+              <small className="text-danger">{validation.synopsis[0]}</small>
+            )}
           </div>
           <div className="col-md-6">
             <label htmlFor="inputEmail4" className="form-label">
@@ -124,6 +136,9 @@ const ModalUpdate = ({ show, onHide, movie, onRefresh }) => {
               id="inputEmail4"
               value={data.year}
             />
+            {validation.year && (
+              <small className="text-danger">{validation.year[0]}</small>
+            )}
           </div>
           <div className="col-md-6">
             <label htmlFor="inputPassword4" className="form-label">
@@ -135,8 +150,10 @@ const ModalUpdate = ({ show, onHide, movie, onRefresh }) => {
               onChange={handleChangeFile} // handler change file dipasang disini
               className="form-control"
               id="inputPassword4"
-              //   value={file}
             />
+            {validation.image && (
+              <small className="text-danger">{validation.image[0]}</small>
+            )}
           </div>
         </Modal.Body>
         <Modal.Footer>

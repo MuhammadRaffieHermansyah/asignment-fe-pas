@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 const Login = () => {
+  
 
   const [data, setData] = useState({
     email: '',
@@ -45,15 +46,15 @@ const Login = () => {
       })
       .catch((err) => {
         setValidation(err.response.data);
-        // console.log(err.response.data)
       });
   };
 
 
-
   return (
+    <>
+      
     <div className="container">
-        {validation.name && (
+        {validation.error && (
             <div className="alert alert-danger" role="alert">
             {validation.error}
           </div>
@@ -62,18 +63,14 @@ const Login = () => {
       <form action="#" onSubmit={handleSubmit}>
         <label htmlFor="username">Email</label>
         <input type="text" id="email" onChange={handleInput} name="email"/>
-        {validation.name && (
-          <small className="text-danger">{validation.email[0]}</small>
-        )}
         <label htmlFor="password">Password</label>
-        <input type="password" onChange={handleInput} id="password" name="password"  />
-        {validation.name && (
-          <small className="text-danger">{validation.name[0]}</small>
-        )}
+        <input type="password" onChange={handleInput} id="password" name="password" />
         <button type="submit">Login</button>
       </form>
       <a href="" onClick={() =>navigate('/register')}>Register</a>
     </div>
+    {/* <Footer /> */}
+    </>
   );
 };
 export default Login;

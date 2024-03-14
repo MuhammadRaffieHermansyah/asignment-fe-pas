@@ -63,13 +63,13 @@ const Registrasi = () => {
         )}
         <label htmlFor="username">Email</label>
         <input type="text" id="email" onChange={handleInput} name="email"/>
-        {validation.name && (
+        {validation.email && (
           <small className="text-danger">{validation.email[0]}</small>
         )}
         <label htmlFor="password">Password</label>
         <input type="password" onChange={handleInput} id="password" name="password"  />
-        {validation.name && (
-          <small className="text-danger">{validation.name[0]}</small>
+        {validation.password && (
+          <small className="text-danger">{validation.password[0]}</small>
         )}
         <button type="submit">Register</button>
       </form>

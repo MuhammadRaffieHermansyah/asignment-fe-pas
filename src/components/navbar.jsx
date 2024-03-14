@@ -19,18 +19,17 @@ const Navbar = ({ children }) => {
 
   const [user, setUser] = useState({});
 
-  const token = localStorage.getItem("token");
-
+  
   const getData = async () => {
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     await axios
       .post("http://127.0.0.1:8000/api/auth/me") // formdata jadi data yang dikirim
       .then((res) => {
         setUser(res.data);
-      })
-      .catch(() => {});
-  };
-
+      });
+    };
+    
+    const token = localStorage.getItem("token");
   useEffect(() => {
     if (!token) {
       navigate("/login");
@@ -44,15 +43,9 @@ const Navbar = ({ children }) => {
       .post("http://127.0.0.1:8000/api/auth/logout") // formdata jadi data yang dikirim
       .then(() => {
         localStorage.removeItem("token");
-        // localStorage.removeItem("role");
         return navigate("/login");
-      })
-      .catch(() => {
-        //   setValidation(err.response.data);
-        //   console.log(err.response.data)
       });
   };
-
   return (
     <>
       <nav

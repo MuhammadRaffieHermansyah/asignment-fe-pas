@@ -17,6 +17,7 @@ const AllData = ({ children, onRefresh }) => {
   };
   const modalStoreClose = () => setShowStore(false);
 
+
   return (
     <>
       <div className="" style={ButtonStyle}>
@@ -35,6 +36,7 @@ const AllData = ({ children, onRefresh }) => {
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Duration</th>
+            <th scope="col">Release</th>
             <th scope="col">Action</th>
           </tr>
         </thead>

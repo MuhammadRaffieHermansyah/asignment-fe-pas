@@ -1,60 +1,61 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
 
 const ModalStore = ({ show, onHide, onRefresh }) => {
+  const [data, setData] = useState({
+    name: null,
+    duration: null,
+    synopsis: null,
+    year: null,
+  });
 
-    const [data, setData] = useState({
-        name: null,
-        duration: null,
-        synopsis: null,
-        year: null,
+  //   state buat file yang dipilih
+  const [file, setFile] = useState(null);
+  const navigate = useNavigate();
+
+  //   handler buat on change inpput file
+  const handleChangeFile = (event) => {
+    setFile(event.target.files[0]);
+  };
+
+  const handleInput = (event) => {
+    setData({ ...data, [event.target.name]: event.target.value });
+  };
+
+  const [validation, setValidation] = useState([]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    // check kalau gaada file stop
+    if (!file) {
+      console.log("Please select image");
+      return;
+    }
+
+    // FormData buat ngirim data filenya
+    // gabisa kalau pakai objek {} biasa
+    // objek biasa buat data string atau number doang
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("duration", data.duration);
+    formData.append("synopsis", data.synopsis);
+    formData.append("year", data.year);
+    formData.append("image", file);
+
+    axios
+      .post("http://127.0.0.1:8000/api/movie", formData) // formdata jadi data yang dikirim
+      .then(() => {
+        onRefresh();
+        return navigate("/alldata");
+      })
+      .catch((err) => {
+        setValidation(err.response.data);
       });
-    
-      //   state buat file yang dipilih
-      const [file, setFile] = useState(null);
-      const navigate = useNavigate();
-    
-      //   handler buat on change inpput file
-      const handleChangeFile = (event) => {
-        setFile(event.target.files[0]);
-      };
-    
-      const handleInput = (event) => {
-        setData({ ...data, [event.target.name]: event.target.value });
-      };
-    
-      const handleSubmit = (event) => {
-        event.preventDefault();
-    
-        // check kalau gaada file stop
-        if(!file) {
-          console.log("Please select image");
-          return;
-        }
-    
-        // FormData buat ngirim data filenya
-        // gabisa kalau pakai objek {} biasa
-        // objek biasa buat data string atau number doang
-        const formData = new FormData();
-        formData.append("name", data.name);
-        formData.append("duration", data.duration);
-        formData.append("synopsis", data.synopsis);
-        formData.append("year", data.year);
-        formData.append("image", file);
-    
-        axios
-          .post("http://127.0.0.1:8000/api/movie", formData) // formdata jadi data yang dikirim
-          .then(() => {
-            onRefresh()
-            return navigate('/alldata')
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      };
+  };
 
   return (
     <Modal show={show} onHide={onHide} size="lg">
@@ -74,6 +75,9 @@ const ModalStore = ({ show, onHide, onRefresh }) => {
               className="form-control"
               id="Name"
             />
+            {validation.name && (
+              <small className="text-danger">{validation.name[0]}</small>
+            )}
           </div>
           <div className="col-md-6">
             <label htmlFor="Duration" className="form-label">
@@ -86,6 +90,9 @@ const ModalStore = ({ show, onHide, onRefresh }) => {
               className="form-control"
               id="Duration"
             />
+            {validation.duration && (
+              <small className="text-danger">{validation.duration[0]}</small>
+            )}
           </div>
           <div className="col-12">
             <label htmlFor="Synopsis" className="form-label">
@@ -98,6 +105,9 @@ const ModalStore = ({ show, onHide, onRefresh }) => {
               className="form-control"
               id="Synopsis"
             />
+            {validation.synopsis && (
+              <small className="text-danger">{validation.synopsis[0]}</small>
+            )}
           </div>
           <div className="col-md-6">
             <label htmlFor="inputEmail4" className="form-label">
@@ -110,6 +120,9 @@ const ModalStore = ({ show, onHide, onRefresh }) => {
               className="form-control"
               id="inputEmail4"
             />
+            {validation.year && (
+              <small className="text-danger">{validation.year[0]}</small>
+            )}
           </div>
           <div className="col-md-6">
             <label htmlFor="inputPassword4" className="form-label">
@@ -122,6 +135,9 @@ const ModalStore = ({ show, onHide, onRefresh }) => {
               className="form-control"
               id="inputPassword4"
             />
+            {validation.image && (
+              <small className="text-danger">{validation.image[0]}</small>
+            )}
           </div>
         </Modal.Body>
         <Modal.Footer>

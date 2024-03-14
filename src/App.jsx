@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
 import Login from "./pages/login";
 import Registrasi from "./pages/registrasi";
-import AddData from "./pages/AddData";
 import AllData from "./pages/AllData";
 import UpdateData from "./pages/UpdateData";
 import Navbar from "./components/navbar";
@@ -49,15 +48,6 @@ export default function App() {
         <Route path="/login" element={<Login />} />
 
         <Route path="/register" element={<Registrasi />} />
-
-        {/* <Route
-          path="/adddata"
-          element={
-            <Navbar>
-              <AddData onRefresh={handleRefreshList} />
-            </Navbar>
-          }
-        /> */}
 
         <Route
           path="/updatedata"
