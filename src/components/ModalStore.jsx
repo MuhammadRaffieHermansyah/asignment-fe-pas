@@ -12,9 +12,10 @@ const ModalStore = ({ show, onHide, onRefresh }) => {
     year: null,
   });
 
+  const navigate = useNavigate();
+
   //   state buat file yang dipilih
   const [file, setFile] = useState(null);
-  const navigate = useNavigate();
 
   //   handler buat on change inpput file
   const handleChangeFile = (event) => {
@@ -32,7 +33,7 @@ const ModalStore = ({ show, onHide, onRefresh }) => {
 
     // check kalau gaada file stop
     if (!file) {
-      console.log("Please select image");
+      alert("Please select image");
       return;
     }
 

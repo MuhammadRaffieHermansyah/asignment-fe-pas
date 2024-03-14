@@ -2,7 +2,6 @@ import { useState } from "react";
 import ModalTonton from "./ModalTonton";
 
 const MovieHome = ({ movies }) => {
-  // console.log(movies);
   const CardStyle = {
     width: "fit-content",
     height: "400px",
@@ -50,10 +49,6 @@ const MovieHome = ({ movies }) => {
       .padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
   
-  // Contoh penggunaan
-  // const seconds = 3665;
-  // console.log(secondsToTime(seconds)); // output: "01:01:05"
-
   return (
     <>
       {movies.map((movieItem) => {

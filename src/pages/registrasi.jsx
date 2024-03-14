@@ -13,13 +13,11 @@ const Registrasi = () => {
 
   const [validation , setValidation] = useState([]);
 
-  //   state buat file yang dipilih
   const navigate = useNavigate();
 
   const handleInput = (event) => {
     setData({ ...data, [event.target.name]: event.target.value });
   };
-
   
   useEffect(() => {
     if(localStorage.getItem('token')){
@@ -30,17 +28,13 @@ const Registrasi = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-
-    // FormData buat ngirim data filenya
-    // gabisa kalau pakai objek {} biasa
-    // objek biasa buat data string atau number doang
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("email", data.email);
     formData.append("password", data.password);
 
     axios
-      .post('http://127.0.0.1:8000/api/auth/register' , formData) // formdata jadi data yang dikirim
+      .post('http://127.0.0.1:8000/api/auth/register' , formData) 
       .then(() => {
         return navigate('/login');
       })
@@ -49,8 +43,6 @@ const Registrasi = () => {
         console.log(err.response.data)
       });
   };
-
-
 
   return (
     <div className="container">

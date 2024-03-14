@@ -9,14 +9,14 @@ export const Movies = ({ movies, setMovies, onRefresh }) => {
   const [show, setShow] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
   const [movie, setMovie] = useState({
-    created_at: "",
-    duration: 0,
     id: 0,
-    image: "",
     name: "",
+    duration: 0,
     synopsis: "",
-    updated_at: "",
+    image: "",
     year: 0,
+    created_at: "",
+    updated_at: "",
   });
 
   const handleDelete = async (data) => {

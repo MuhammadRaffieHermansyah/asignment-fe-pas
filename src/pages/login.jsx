@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 
 const Login = () => {
   
-
   const [data, setData] = useState({
     email: '',
     password: '',
@@ -13,7 +12,6 @@ const Login = () => {
 
   const [validation , setValidation] = useState([]);
 
-  //   state buat file yang dipilih
   const navigate = useNavigate();
 
   const handleInput = (event) => {
@@ -29,16 +27,12 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-
-    // FormData buat ngirim data filenya
-    // gabisa kalau pakai objek {} biasa
-    // objek biasa buat data string atau number doang
     const formData = new FormData();
     formData.append("email", data.email);
     formData.append("password", data.password);
 
     axios
-      .post('http://127.0.0.1:8000/api/auth/login' , formData) // formdata jadi data yang dikirim
+      .post('http://127.0.0.1:8000/api/auth/login' , formData) 
       .then((res) => {
         localStorage.setItem('token' , res.data.access_token);
         console.log(res);

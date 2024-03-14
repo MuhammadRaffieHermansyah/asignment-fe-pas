@@ -13,17 +13,15 @@ const Navbar = ({ children }) => {
     width: "100%",
     right: "0",
     zIndex: "1",
-    // marginBottom : "100px",
     padding: "10px 70px",
   };
 
   const [user, setUser] = useState({});
-
   
   const getData = async () => {
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     await axios
-      .post("http://127.0.0.1:8000/api/auth/me") // formdata jadi data yang dikirim
+      .post("http://127.0.0.1:8000/api/auth/me") 
       .then((res) => {
         setUser(res.data);
       });
@@ -40,12 +38,16 @@ const Navbar = ({ children }) => {
   const handleLogout = async () => {
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     await axios
-      .post("http://127.0.0.1:8000/api/auth/logout") // formdata jadi data yang dikirim
+      .post("http://127.0.0.1:8000/api/auth/logout")
       .then(() => {
         localStorage.removeItem("token");
         return navigate("/login");
       });
   };
+  const a = {
+    cursor : "pointer",
+    color : "rgb(69, 69, 69)"
+  }
   return (
     <>
       <nav
@@ -59,8 +61,9 @@ const Navbar = ({ children }) => {
           <ul className="navbar-nav">
             <li className="nav-item">
               <a
-                className="nav-link active"
+                className="nav-link"
                 aria-current="page"
+                style={a}
                 onClick={() => navigate("/")}
               >
                 Home
@@ -68,14 +71,14 @@ const Navbar = ({ children }) => {
             </li>
             { user.role == 'admin' && (
             <li className="nav-item">
-              <a className="nav-link" onClick={() => navigate("/alldata")}>
+              <a className="nav-link" style={a} onClick={() => navigate("/alldata")}>
                 AllData
               </a>
             </li>
             )
             }
             <li className="nav-item">
-              <a className="nav-link" onClick={handleLogout}>
+              <a className="nav-link" style={a} onClick={handleLogout}>
                 Logout
               </a>
             </li>

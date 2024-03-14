@@ -1,4 +1,3 @@
-import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import ModalStore from "../components/ModalStore";
 
@@ -8,7 +7,7 @@ const AllData = ({ children, onRefresh }) => {
     width: "1200px",
   };
   const ButtonStyle = {
-    marginTop: "100px",
+    marginTop: "240px",
   };
   const [showStore, setShowStore] = useState(false);
 
@@ -17,18 +16,17 @@ const AllData = ({ children, onRefresh }) => {
   };
   const modalStoreClose = () => setShowStore(false);
 
-
   return (
     <>
-      <div className="" style={ButtonStyle}>
-        <Button
-          variant="success"
+      <div className="mb-4" style={ButtonStyle}>
+        <button
+        className="btn btn-success px-5 py-3 fw-bold"
           onClick={() => {
             modalStoreShow();
           }}
         >
-          Add Data
-        </Button>
+          Add New Film
+        </button>
       </div>
       <table className="table table-striped table-hover" style={TableStyle}>
         <thead>
